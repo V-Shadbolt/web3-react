@@ -63,7 +63,8 @@ const connectorsByName: { [connectorName in ConnectorNames]: any } = {
   [ConnectorNames.UAuth]: uauth
 }
 
-const getConnectorImage = (connectorName: string) => {
+function getConnectorImage(connectorName: string) {
+  // scale for additional wallts
   if (connectorName === 'Unstoppable') {
     return udlogo
   }
@@ -280,6 +281,7 @@ function App() {
           const activating = currentConnector === activatingConnector
           const connected = currentConnector === connector
           const disabled = !triedEager || !!activatingConnector || connected || !!error
+          const logo = getConnectorImage(name)
 
           return (
             <button
@@ -301,6 +303,9 @@ function App() {
                 })
               }}
             >
+              <div>
+                <img src={logo} />
+              </div>
               <div
                 style={{
                   position: 'absolute',
@@ -313,11 +318,6 @@ function App() {
                   margin: '0 0 0 1rem'
                 }}
               >
-                {connected && (
-                  <span role="img" aria-label="check">
-                    ✅
-                  </span>
-                )}
                 {activating && <Spinner color={'black'} style={{ height: '25%', marginLeft: '-1rem' }} />}
                 {connected && (
                   <span role="img" aria-label="check">
