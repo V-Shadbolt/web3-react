@@ -23,9 +23,11 @@ import {
   fortmatic,
   magic,
   portis,
-  torus
+  torus,
+  uauth
 } from '../connectors'
 import { Spinner } from '../components/Spinner'
+import udlogo from '../assets/unstoppable.svg'
 
 enum ConnectorNames {
   Injected = 'Injected',
@@ -40,7 +42,8 @@ enum ConnectorNames {
   Fortmatic = 'Fortmatic',
   Magic = 'Magic',
   Portis = 'Portis',
-  Torus = 'Torus'
+  Torus = 'Torus',
+  UAuth = 'Unstoppable'
 }
 
 const connectorsByName: { [connectorName in ConnectorNames]: any } = {
@@ -56,7 +59,15 @@ const connectorsByName: { [connectorName in ConnectorNames]: any } = {
   [ConnectorNames.Fortmatic]: fortmatic,
   [ConnectorNames.Magic]: magic,
   [ConnectorNames.Portis]: portis,
-  [ConnectorNames.Torus]: torus
+  [ConnectorNames.Torus]: torus,
+  [ConnectorNames.UAuth]: uauth
+}
+
+const getConnectorImage = (connectorName: string) => {
+  if (connectorName === 'Unstoppable') {
+    return udlogo
+  }
+  return ''
 }
 
 function getErrorMessage(error: Error) {
@@ -277,7 +288,7 @@ function App() {
                 borderRadius: '1rem',
                 borderColor: activating ? 'orange' : connected ? 'green' : 'unset',
                 cursor: disabled ? 'unset' : 'pointer',
-                position: 'relative'
+                position: 'relative',
               }}
               disabled={disabled}
               key={name}
@@ -302,6 +313,11 @@ function App() {
                   margin: '0 0 0 1rem'
                 }}
               >
+                {connected && (
+                  <span role="img" aria-label="check">
+                    ✅
+                  </span>
+                )}
                 {activating && <Spinner color={'black'} style={{ height: '25%', marginLeft: '-1rem' }} />}
                 {connected && (
                   <span role="img" aria-label="check">

@@ -11,6 +11,7 @@ import { TorusConnector } from '@web3-react/torus-connector'
 import { TrezorConnector } from '@web3-react/trezor-connector'
 import { WalletConnectConnector } from '@web3-react/walletconnect-connector'
 import { WalletLinkConnector } from '@web3-react/walletlink-connector'
+import { UAuthConnector } from '@uauth/web3-react'
 
 const POLLING_INTERVAL = 12000
 const RPC_URLS: { [chainId: number]: string } = {
@@ -69,3 +70,13 @@ export const magic = new MagicConnector({
 export const portis = new PortisConnector({ dAppId: process.env.PORTIS_DAPP_ID as string, networks: [1, 100] })
 
 export const torus = new TorusConnector({ chainId: 1 })
+
+export const uauth = new UAuthConnector({
+  clientID: '284494a4-9ef2-40a5-a188-bf576762baa6',
+  redirectUri: 'http://localhost:3000',
+  // Scope must include openid and wallet
+  scope: 'openid wallet',
+
+  // Injected and walletconnect connectors are required.
+  connectors: {injected, walletconnect},
+})
