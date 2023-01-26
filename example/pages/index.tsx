@@ -27,7 +27,9 @@ import {
   uauth
 } from '../connectors'
 import { Spinner } from '../components/Spinner'
+import Image from 'next/image';
 import udlogo from '../assets/unstoppable.svg'
+import wclogo from '../assets/walletConnectIcon.svg'
 
 enum ConnectorNames {
   Injected = 'Injected',
@@ -68,7 +70,10 @@ function getConnectorImage(connectorName: string) {
   if (connectorName === 'Unstoppable') {
     return udlogo
   }
-  return ''
+  if (connectorName === 'WalletConnect') {
+    return wclogo
+  }
+  return null
 }
 
 function getErrorMessage(error: Error) {
@@ -303,9 +308,12 @@ function App() {
                 })
               }}
             >
-              <div>
-                <img src={logo} />
-              </div>
+              {logo && (
+                <div>
+                  <Image src={logo} />
+                </div>
+              )}
+              
               <div
                 style={{
                   position: 'absolute',
